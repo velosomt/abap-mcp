@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.sap.adt.mcp.server.feature"
+      label="ALÊ ADT ABAP"
+      version="2.0.0.qualifier"
+      provider-name="ALÊ ADT ABAP">
+
+   <description>
+      ALÊ ADT ABAP - Personal MCP Server for SAP ADT.
+   </description>
+
+   <copyright>
+      Copyright (c) 2026 ALÊ ADT ABAP
+   </copyright>
+
+   <license url="https://github.com/333xandelz/ale_adt_abap">
+      ALÊ ADT ABAP - TERMO DE LICENÇA E ACORDO DE USO (EULA)
+
+Ao instalar e utilizar este plugin ("ALÊ ADT ABAP"), você declara ter lido e concordado com os seguintes termos:
+
+1. AVISO SOBRE INTELIGÊNCIA ARTIFICIAL E GERAÇÃO DE CÓDIGO
+Este plugin atua como uma ponte (MCP) entre o seu Eclipse ADT e agentes de Inteligência Artificial. A IA pode gerar, modificar ou executar códigos ABAP de forma automatizada no seu ambiente SAP. Você reconhece que códigos gerados por IA podem conter falhas, comportamentos imprevisíveis ou não otimizados.
+
+2. RESPONSABILIDADE DO DESENVOLVEDOR
+É sua responsabilidade total e exclusiva revisar, validar e testar todo e qualquer objeto ABAP ou código fonte gerado, alterado ou ativado por este plugin antes de qualquer transporte para ambientes de Qualidade (QA) ou Produção (PRD).
+
+3. LIMITAÇÃO DE RESPONSABILIDADE
+O software é fornecido "COMO ESTÁ" (as-is), sem garantias de qualquer tipo. O autor ("ALÊ ADT ABAP") não será responsável por perda de dados, quedas no sistema SAP, corrupção de objetos, ou quaisquer outros danos diretos ou indiretos decorrentes do uso deste plugin.
+
+4. SEGURANÇA E AMBIENTE
+Certifique-se de que este plugin está sendo utilizado única e exclusivamente em um ambiente de Desenvolvimento ou Sandbox (DEV/SBX) no qual você tem autorização explícita para criar e modificar objetos de desenvolvimento.
+
+Se você não concorda com estes termos, cancele a instalação agora mesmo.
+   </license>
+
+   <plugin
+         id="com.sap.adt.mcp.server.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

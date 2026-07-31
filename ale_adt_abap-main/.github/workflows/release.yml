@@ -1,0 +1,40 @@
+name: Release
+
+# Dispara quando você cria uma tag vX.Y.Z (ex: git tag v2.0.1 && git push --tags)
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build standalone jar
+        working-directory: com.sap.adt.mcp.server.standalone
+        run: mvn clean package -DskipTests --no-transfer-progress
+
+      - name: Renomear jar para URL estável
+        run: |
+          mv com.sap.adt.mcp.server.standalone/target/ale-adt-mcp-standalone-*.jar \
+             ale-adt-mcp-standalone.jar
+
+      - name: Publicar GitHub Release
+        run: |
+          gh release create "${{ github.ref_name }}" ale-adt-mcp-standalone.jar \
+            --title "ALÊ ADT ABAP ${{ github.ref_name }}" \
+            --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

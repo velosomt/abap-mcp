@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Projeto Maven AUTÔNOMO (sem o parent Tycho do plugin): gera um fat-jar
+         executável que sobe o mesmo servidor MCP fora do Eclipse, para uso no
+         VS Code (ou qualquer cliente MCP). Reaproveita as fontes do plugin via
+         build-helper, excluindo apenas a camada Eclipse (UI/preferences/Activator). -->
+    <groupId>com.sap.adt.mcp</groupId>
+    <artifactId>com.sap.adt.mcp.server.standalone</artifactId>
+    <version>2.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>SAP ADT MCP Server - Standalone (no Eclipse)</name>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mainClass>com.sap.adt.mcp.standalone.StandaloneMain</mainClass>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>ale-adt-mcp-standalone-${project.version}</finalName>
+        <plugins>
+            <!-- Reaproveita as fontes do plugin OSGi como source root extra -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>add-plugin-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals><goal>add-source</goal></goals>
+                        <configuration>
+                            <sources>
+                                <source>../com.sap.adt.mcp.server.plugin/src</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Compila tudo MENOS a camada Eclipse (única que depende de org.eclipse/org.osgi) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <excludes>
+                        <exclude>com/sap/adt/mcp/ui/**</exclude>
+                        <exclude>com/sap/adt/mcp/preferences/**</exclude>
+                        <exclude>com/sap/adt/mcp/Activator.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- Fat-jar executável -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>shade</goal></goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>${mainClass}</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,30 @@
+# Build output
+**/target/
+**/bin/
+
+# IDE
+.project
+.classpath
+.settings/
+*.iml
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+/jdk17_tmp/
+/maven_tmp/
+*.zip
+build_last.log
+build_standalone.log
+build_*.log
+dependency-reduced-pom.xml
+
+# Setup — credenciais e jar baixado
+setup/.env
+setup/*.jar
+*.bak-codex-*
+*.bak
+test.txt
+test2.java
